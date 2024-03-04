@@ -17,3 +17,18 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: IranSans
+      fonts:
+        - asset: assets/fonts/IranSans-Black.ttf
+        - asset: assets/fonts/IranSans-Bold.ttf
+        - asset: assets/fonts/IranSans-DemiBold.ttf
+        - asset: assets/fonts/IranSans-ExtraBold.ttf
+        - asset: assets/fonts/IranSans-Light.ttf
+        - asset: assets/fonts/IranSans-Medium.ttf
+        - asset: assets/fonts/IranSans-Regular.ttf
+        - asset: assets/fonts/IranSans-Thin.ttf
+        - asset: assets/fonts/IranSans-UltraLight.ttf
