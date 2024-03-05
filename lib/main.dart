@@ -1,5 +1,6 @@
 import 'package:PriceGuardian/Core/Constants/localization.dart';
 import 'package:PriceGuardian/Core/Themes/themes.dart';
+import 'package:PriceGuardian/Features/Models/product.dart';
 import 'package:PriceGuardian/Features/Models/store.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -7,6 +8,7 @@ import 'package:hive_flutter/adapters.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(StoreModelAdapter());
+  Hive.registerAdapter(ProductModelAdapter());
   runApp(const MainApp());
 }
 
