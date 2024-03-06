@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  get_storage: ^2.1.1
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:
