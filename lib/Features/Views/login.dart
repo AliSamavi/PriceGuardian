@@ -5,6 +5,7 @@ import 'package:PriceGuardian/Core/Constants/images.dart';
 import 'package:PriceGuardian/Core/Utils/currency.dart';
 import 'package:PriceGuardian/Core/Widgets/custom_dropdown.dart';
 import 'package:PriceGuardian/Core/Widgets/custom_text_field.dart';
+import 'package:PriceGuardian/Features/Views/home.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -147,6 +148,7 @@ class _LoginViewState extends State<LoginView> {
                           const SizedBox(height: 5),
                           CustomDropdown(
                             radius: 18,
+                            value: currency,
                             onChanged: (value) {
                               currency = value!;
                             },
@@ -157,7 +159,7 @@ class _LoginViewState extends State<LoginView> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF140F2D),
                               elevation: 2.5,
-                              minimumSize: const Size(350, 50),
+                              minimumSize: const Size(500, 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
@@ -196,7 +198,7 @@ class _LoginViewState extends State<LoginView> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Scaffold()),
+        MaterialPageRoute(builder: (context) => const HomeView()),
       );
     }
   }

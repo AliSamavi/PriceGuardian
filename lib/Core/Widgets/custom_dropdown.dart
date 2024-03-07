@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class CustomDropdown extends StatelessWidget {
   final double radius;
+  final Currency value;
   final Function(Currency? value) onChanged;
   const CustomDropdown(
-      {required this.radius, required this.onChanged, super.key});
+      {required this.radius,
+      required this.value,
+      required this.onChanged,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class CustomDropdown extends StatelessWidget {
           borderSide: const BorderSide(color: Color(0xFF140F2D)),
         ),
       ),
-      value: Currency.rial,
+      value: value,
       onChanged: onChanged,
       items: <List>[
         ["ریال", Currency.rial],
