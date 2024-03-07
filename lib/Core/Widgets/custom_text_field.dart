@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final FocusNode? focusNode;
   final TextInputType? keyboardType;
+  final TextDirection? textDirection;
   final Function(String value)? onChanged;
   final Function()? onEditingComplete;
   const CustomTextField(
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
       this.hintText,
       this.fontSize,
       this.focusNode,
+      this.textDirection,
       this.keyboardType,
       this.onChanged,
       this.onEditingComplete,
@@ -26,14 +28,14 @@ class CustomTextField extends StatelessWidget {
       focusNode: focusNode,
       controller: controller,
       keyboardType: keyboardType,
-      textDirection: TextDirection.ltr,
+      textDirection: textDirection ?? TextDirection.ltr,
       cursorColor: const Color(0xFF140F2D),
       style: TextStyle(fontSize: fontSize),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey.withOpacity(0.25),
         hintText: hintText,
-        hintTextDirection: TextDirection.ltr,
+        hintTextDirection: textDirection ?? TextDirection.ltr,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
           borderSide: const BorderSide(color: Color(0xFF140F2D)),
