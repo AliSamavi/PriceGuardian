@@ -15,8 +15,8 @@ class StoreView extends StatefulWidget {
 
 class _StoreViewState extends State<StoreView> {
   TextEditingController name = TextEditingController();
-  TextEditingController xpathPrice = TextEditingController();
-  TextEditingController xpathDiscounted = TextEditingController();
+  TextEditingController S1 = TextEditingController();
+  TextEditingController S2 = TextEditingController();
   TextEditingController percent = TextEditingController(text: "100");
   Currency currency = Currency.rial;
 
@@ -24,8 +24,8 @@ class _StoreViewState extends State<StoreView> {
   void initState() {
     if (widget.model != null) {
       name.text = widget.model!.name;
-      xpathPrice.text = widget.model!.xpathPrice;
-      xpathDiscounted.text = widget.model!.xpathDiscounted ?? "";
+      S1.text = widget.model!.S1;
+      S2.text = widget.model!.S2 ?? "";
       percent.text = widget.model!.percent.toString();
       currency = widget.model!.currency == "Currency.rial"
           ? Currency.rial
@@ -63,7 +63,7 @@ class _StoreViewState extends State<StoreView> {
               ),
             ),
             const SizedBox(height: 5),
-            CustomTextField(controller: xpathPrice, radius: 18),
+            CustomTextField(controller: S1, radius: 18),
             const SizedBox(height: 15),
             const Text(
               "آدرس قیمت محصول دارای تخفیف:",
@@ -72,7 +72,7 @@ class _StoreViewState extends State<StoreView> {
               ),
             ),
             const SizedBox(height: 5),
-            CustomTextField(controller: xpathDiscounted, radius: 18),
+            CustomTextField(controller: S2, radius: 18),
             const SizedBox(height: 15),
             const Text(
               "درصد افزایش:",
@@ -128,14 +128,12 @@ class _StoreViewState extends State<StoreView> {
   }
 
   void onPressed() async {
-    if (name.text.isNotEmpty &&
-        xpathPrice.text.isNotEmpty &&
-        percent.text.isNotEmpty) {
+    if (name.text.isNotEmpty && S1.text.isNotEmpty && percent.text.isNotEmpty) {
       var box = await Hive.openBox<StoreModel>("stores");
       final data = StoreModel(
           name.text,
-          xpathPrice.text,
-          xpathDiscounted.text != "" ? xpathDiscounted.text : null,
+          S1.text,
+          S2.text != "" ? S2.text : null,
           currency.toString(),
           double.parse(percent.text));
 
