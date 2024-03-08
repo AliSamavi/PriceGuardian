@@ -4,4 +4,5 @@ class Images {
   static const edit = "assets/images/edit.svg";
   static const connection = "assets/images/connection.png";
   static const bag = "assets/images/bag.svg";
+  static const play = "assets/images/play.svg";
 }
