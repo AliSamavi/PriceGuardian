@@ -9,7 +9,6 @@ class Service {
     String price,
   ) async {
     Uri url = Uri.parse("https://$domain/api/products/$id");
-
     try {
       final response = await http.get(url, headers: headers);
 
@@ -23,7 +22,7 @@ class Service {
 
       final body = document.toXmlString();
 
-      http.put(url, body: body).then((result) {
+      http.put(url, body: body, headers: headers).then((result) {
         print(result.statusCode);
       });
     } catch (e) {}
