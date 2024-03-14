@@ -19,6 +19,8 @@ dependencies:
   http: ^1.2.1
   html: ^0.15.4
   xml: ^6.3.0
+  flutter_svg: ^2.0.10+1
+  file_picker: ^6.2.0
 
 dev_dependencies:
   flutter_test:
