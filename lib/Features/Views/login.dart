@@ -192,7 +192,7 @@ class _LoginViewState extends State<LoginView> {
 
       storage.write("data", {
         "domain": domain.text,
-        "headers": {"Authorization": "Basic $authorization"},
+        "authorization": "Basic $authorization",
         "currency": currency.toString(),
       });
 
