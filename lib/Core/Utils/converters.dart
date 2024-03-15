@@ -39,4 +39,9 @@ class Converters {
       return "";
     }
   }
+
+  static String calculator(String price, double percent) {
+    double amount = percent / 100;
+    return (int.parse(price) * amount).toString();
+  }
 }
