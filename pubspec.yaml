@@ -21,6 +21,8 @@ dependencies:
   xml: ^6.3.0
   flutter_svg: ^2.0.10+1
   file_picker: ^6.2.0
+  webview_flutter: ^4.7.0
+  xpath_selector_html_parser: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:PriceGuardian/Core/Constants/images.dart';
+import 'package:PriceGuardian/Core/Widgets/custom_dialog.dart';
 import 'package:PriceGuardian/Core/Widgets/custom_text_field.dart';
 import 'package:PriceGuardian/Features/Models/product.dart';
 import 'package:PriceGuardian/Features/Models/store.dart';
@@ -41,8 +42,13 @@ class _HomeViewState extends State<HomeView> {
             left: 0,
             right: 0,
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (updateStore.isNotEmpty) {
+                  await showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => CustomDialog(stores: updateStore),
+                  );
                   updateStore = [];
                   controller.update();
                 }
