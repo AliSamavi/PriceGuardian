@@ -2,7 +2,26 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
 
 class Service {
-  static void update(
+  static Future<String?> get(
+    String domain,
+    Map<String, String> headers,
+    int id,
+  ) async {
+    Uri url = Uri.parse("https://$domain/api/products/$id?display=[name]");
+    try {
+      final response = await http.get(url, headers: headers);
+
+      final document = XmlDocument.parse(response.body);
+
+      final product = document.rootElement.findElements("product").first;
+
+      return product.findElements("name").first.innerText;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static void put(
     String domain,
     Map<String, String> headers,
     int id,
