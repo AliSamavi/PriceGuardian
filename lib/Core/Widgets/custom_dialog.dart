@@ -24,6 +24,7 @@ class _CustomDialogState extends State<CustomDialog> {
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..clearLocalStorage()
     ..clearCache();
+  bool updating = true;
 
   RxInt updateds = 0.obs;
   final unavailable = RxList<Widget>().obs;
@@ -41,8 +42,13 @@ class _CustomDialogState extends State<CustomDialog> {
 
     final products = await Hive.openBox<ProductModel>("products");
     for (StoreModel store in widget.stores) {
+      if (!updating) {
+        break;
+      }
       for (ProductModel product in products.values) {
-        if (store.key == product.store) {
+        if (!updating) {
+          break;
+        } else if (store.key == product.store) {
           bool isPageFinished = false;
           controller
             ..loadRequest(Uri.parse(product.url))
@@ -63,7 +69,7 @@ class _CustomDialogState extends State<CustomDialog> {
                       final discountNode =
                           element.queryXPath(store.xpathDiscount ?? "").node;
                       if (priceNode != null) {
-                        Service.update(
+                        Service.put(
                           data["domain"],
                           {"Authorization": data["authorization"]},
                           product.id,
@@ -76,7 +82,7 @@ class _CustomDialogState extends State<CustomDialog> {
                         );
                         updateds.value++;
                       } else if (discountNode != null) {
-                        Service.update(
+                        Service.put(
                           data["domain"],
                           {"Authorization": data["authorization"]},
                           product.id,
@@ -89,20 +95,30 @@ class _CustomDialogState extends State<CustomDialog> {
                         );
                         updateds.value++;
                       } else {
+                        String? name = await Service.get(
+                            data["domain"],
+                            {"Authorization": data["authorization"]},
+                            product.id);
+
                         unavailable.value.add(
                           Container(
                             height: 30,
+                            margin: const EdgeInsets.symmetric(vertical: 2.5),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Center(
-                              child: Text(
-                                product.id.toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500),
-                              ),
+                            child: Row(
+                              children: [
+                                Text(product.id.toString()),
+                                const SizedBox(width: 15),
+                                Text(
+                                  name ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -126,8 +142,12 @@ class _CustomDialogState extends State<CustomDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      onPopInvoked: (didPop) async {
+        updating = false;
+        await controller.clearCache();
+        await controller.clearLocalStorage();
+      },
       child: Dialog(
         child: Stack(
           children: [
@@ -169,10 +189,7 @@ class _CustomDialogState extends State<CustomDialog> {
                   ),
                   Expanded(
                     child: Obx(
-                      () => GridView.count(
-                        crossAxisCount: 5,
-                        mainAxisSpacing: 6,
-                        crossAxisSpacing: 6,
+                      () => ListView(
                         physics: const BouncingScrollPhysics(),
                         children: unavailable.value,
                       ),
