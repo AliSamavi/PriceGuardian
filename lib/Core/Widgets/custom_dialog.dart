@@ -25,6 +25,7 @@ class _CustomDialogState extends State<CustomDialog> {
     ..clearLocalStorage()
     ..clearCache();
   bool updating = true;
+  late Map<String, dynamic> data;
 
   RxInt updateds = 0.obs;
   final unavailable = RxList<Widget>().obs;
@@ -32,14 +33,13 @@ class _CustomDialogState extends State<CustomDialog> {
 
   @override
   void initState() {
+    GetStorage storage = GetStorage();
+    data = storage.read("data");
     asyncState();
     super.initState();
   }
 
   void asyncState() async {
-    GetStorage storage = GetStorage();
-    Map<String, dynamic> data = storage.read("data");
-
     final products = await Hive.openBox<ProductModel>("products");
     for (StoreModel store in widget.stores) {
       if (!updating) {
@@ -69,31 +69,9 @@ class _CustomDialogState extends State<CustomDialog> {
                       final discountNode =
                           element.queryXPath(store.xpathDiscount ?? "").node;
                       if (priceNode != null) {
-                        Service.put(
-                          data["domain"],
-                          {"Authorization": data["authorization"]},
-                          product.id,
-                          Converters.calculator(
-                              Converters.currency(
-                                  Converters.number(priceNode.text!),
-                                  data["currency"],
-                                  store.currency),
-                              store.percent ?? 100),
-                        );
-                        updateds.value++;
+                        update(store, product.id, priceNode.text!);
                       } else if (discountNode != null) {
-                        Service.put(
-                          data["domain"],
-                          {"Authorization": data["authorization"]},
-                          product.id,
-                          Converters.calculator(
-                              Converters.currency(
-                                  Converters.number(discountNode.text!),
-                                  data["currency"],
-                                  store.currency),
-                              store.percent ?? 100),
-                        );
-                        updateds.value++;
+                        update(store, product.id, discountNode.text!);
                       } else {
                         String? name = await Service.get(
                             data["domain"],
@@ -102,7 +80,7 @@ class _CustomDialogState extends State<CustomDialog> {
 
                         unavailable.value.add(
                           Container(
-                            height: 30,
+                            height: 50,
                             margin: const EdgeInsets.symmetric(vertical: 2.5),
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
@@ -152,7 +130,7 @@ class _CustomDialogState extends State<CustomDialog> {
         child: Stack(
           children: [
             Container(
-              height: 500,
+              height: 550,
               padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
@@ -212,7 +190,7 @@ class _CustomDialogState extends State<CustomDialog> {
                         ),
                       ),
                       child: const Text(
-                        "بازگشت",
+                        "تایید",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -229,5 +207,18 @@ class _CustomDialogState extends State<CustomDialog> {
         ),
       ),
     );
+  }
+
+  void update(StoreModel store, int id, String text) {
+    Service.put(
+      data["domain"],
+      {"Authorization": data["authorization"]},
+      id,
+      Converters.calculator(
+          Converters.currency(
+              Converters.number(text), data["currency"], store.currency),
+          store.percent ?? 100),
+    );
+    updateds.value++;
   }
 }
