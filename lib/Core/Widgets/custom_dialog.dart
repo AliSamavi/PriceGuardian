@@ -109,7 +109,7 @@ class _CustomDialogState extends State<CustomDialog> {
             );
 
           while (!isPageFinished) {
-            await Future.delayed(const Duration(milliseconds: 3000));
+            await Future.delayed(const Duration(milliseconds: 500));
           }
         }
       }
