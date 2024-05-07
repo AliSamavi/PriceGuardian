@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'product.g.dart';
 
 @HiveType(typeId: 2)
-class ProductModel {
+class ProductModel extends HiveObject {
   @HiveField(0)
   int store;
   @HiveField(1)
