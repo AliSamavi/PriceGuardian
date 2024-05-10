@@ -9,12 +9,20 @@ class StoreModel extends HiveObject {
   @HiveField(1)
   String xpathPrice;
   @HiveField(2)
-  String? xpathDiscount;
+  String xpathDiscount;
   @HiveField(3)
+  String xpathPriceBeforeDiscount;
+  @HiveField(5)
   String currency;
-  @HiveField(4)
-  double? percent;
+  @HiveField(6)
+  double percent;
 
-  StoreModel(this.name, this.xpathPrice, this.xpathDiscount, this.currency,
-      this.percent);
+  StoreModel(
+    this.name,
+    this.xpathPrice,
+    this.xpathDiscount,
+    this.xpathPriceBeforeDiscount,
+    this.currency,
+    this.percent,
+  );
 }

@@ -26,9 +26,7 @@ class MainApp extends StatelessWidget {
       localizationsDelegates: Localization.delegates,
       supportedLocales: Localization.supported,
       theme: Themes.primary,
-      home: GetStorage().read("data") == null
-          ? const LoginView()
-          : const HomeView(),
+      home: GetStorage().read("data") == null ? LoginView() : const HomeView(),
     );
   }
 }

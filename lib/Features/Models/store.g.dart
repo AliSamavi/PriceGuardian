@@ -19,16 +19,17 @@ class StoreModelAdapter extends TypeAdapter<StoreModel> {
     return StoreModel(
       fields[0] as String,
       fields[1] as String,
-      fields[2] as String?,
+      fields[2] as String,
       fields[3] as String,
-      fields[4] as double?,
+      fields[5] as String,
+      fields[6] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, StoreModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -36,8 +37,10 @@ class StoreModelAdapter extends TypeAdapter<StoreModel> {
       ..writeByte(2)
       ..write(obj.xpathDiscount)
       ..writeByte(3)
+      ..write(obj.xpathPriceBeforeDiscount)
+      ..writeByte(5)
       ..write(obj.currency)
-      ..writeByte(4)
+      ..writeByte(6)
       ..write(obj.percent);
   }
 
