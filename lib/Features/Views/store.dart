@@ -21,7 +21,6 @@ class _StoreViewState extends State<StoreView> {
   TextEditingController xpathPriceBeforeDiscount = TextEditingController();
   TextEditingController percent = TextEditingController(text: "100");
   Currency currency = Currency.rial;
-  RxBool setTheFinalPrice = true.obs;
 
   final RxBool validator = false.obs;
 
@@ -32,7 +31,6 @@ class _StoreViewState extends State<StoreView> {
       xpathPrice.text = widget.model!.xpathPrice;
       xpathDiscount.text = widget.model!.xpathDiscount;
       xpathPriceBeforeDiscount.text = widget.model!.xpathPriceBeforeDiscount;
-      setTheFinalPrice.value = widget.model!.setTheFinalPrice;
       percent.text = widget.model!.percent.toString();
       currency = widget.model!.currency == "Currency.rial"
           ? Currency.rial
@@ -104,27 +102,6 @@ class _StoreViewState extends State<StoreView> {
               controller: xpathPriceBeforeDiscount,
               radius: 18,
               onChanged: assessment,
-            ),
-            const SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  "قیمت نهایی را به عنوان قیمت تنظیم کن:",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Obx(() {
-                  return Checkbox(
-                    value: setTheFinalPrice.value,
-                    activeColor: const Color(0xFF140F2D),
-                    onChanged: (value) {
-                      setTheFinalPrice.value = value!;
-                    },
-                  );
-                })
-              ],
             ),
             const Divider(),
             const Text(
@@ -201,7 +178,6 @@ class _StoreViewState extends State<StoreView> {
         xpathPrice.text,
         xpathDiscount.text,
         xpathPriceBeforeDiscount.text,
-        setTheFinalPrice.value,
         currency.toString(),
         double.parse(percent.text));
 
